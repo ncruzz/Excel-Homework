@@ -1,0 +1,48 @@
+Sub Stocks()
+
+    
+Dim Ws As Worksheet
+For Each Ws In ActiveWorkbook.Worksheets
+    Ws.Activate
+Dim sht As Worksheet
+Dim LastRow As Long
+Dim Stock_ticker As String
+Dim Vol As LongLong
+Vol = 0
+Dim Summary_Table_Row As Integer
+Summary_Table_Row = 2
+
+        Range("J1") = "Stock Ticker"
+        Range("K1") = "Total Volume"
+
+Set sht = ActiveSheet
+
+    LastRow = sht.Cells(sht.Rows.Count, "A").End(xlUp).Row - 1
+
+        For i = 2 To LastRow
+
+            If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+    
+            Stock_ticker = Cells(i, 1).Value
+    
+            Vol = Vol + Cells(i, 7).Value
+    
+            Range("J" & Summary_Table_Row).Value = Stock_ticker
+    
+            Range("K" & Summary_Table_Row).Value = Vol
+
+            Summary_Table_Row = Summary_Table_Row + 1
+      
+            Vol = 0
+
+        Else
+
+            Vol = Vol + Cells(i, 7).Value
+
+        End If
+
+        Next i
+
+Next Ws
+
+End Sub
